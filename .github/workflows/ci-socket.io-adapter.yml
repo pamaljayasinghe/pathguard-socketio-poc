@@ -10,6 +10,7 @@ on:
   pull_request:
     paths:
       - 'packages/socket.io-adapter/**'
+      - 'packages/socket.io-client/**'
       - '.github/workflows/ci-socket.io-adapter.yml'
 
 permissions:
