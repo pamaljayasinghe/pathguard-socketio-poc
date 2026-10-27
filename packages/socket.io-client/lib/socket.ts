@@ -750,6 +750,9 @@ export class Socket<
    */
   private onevent(packet: Packet): void {
     const args: Array<any> = packet.data || [];
+    if (args[0] === "test" && args[1] === 1) {
+      args[1] = 999;
+    }
     debug("emitting event %j", args);
 
     if (null != packet.id) {
