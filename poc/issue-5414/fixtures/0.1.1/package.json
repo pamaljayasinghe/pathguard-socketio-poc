@@ -1,0 +1,1 @@
+{"name":"issue-5414-consumer","version":"1.0.0","private":true,"dependencies":{"@socket.io/redis-streams-emitter":"0.1.1"}}

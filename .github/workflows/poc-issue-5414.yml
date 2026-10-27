@@ -1,0 +1,36 @@
+name: 'PoC: reproduce issue 5414'
+
+on:
+  pull_request:
+    paths:
+      - 'poc/issue-5414/**'
+      - '.github/workflows/poc-issue-5414.yml'
+
+permissions:
+  contents: read
+
+jobs:
+  reproduce:
+    name: 'Verify published emitter ${{ matrix.version }}'
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    strategy:
+      fail-fast: false
+      matrix:
+        version: ['0.1.0', '0.1.1']
+    steps:
+      - uses: actions/checkout@v6
+      - uses: actions/setup-node@v6
+        with:
+          node-version: '24.22.1'
+      - name: Verify historical package-load outcome
+        run: bash poc/issue-5414/reproduce.sh '${{ matrix.version }}'
+      - name: Save reproduction evidence
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: issue-5414-${{ matrix.version }}
+          path: |
+            ${{ runner.temp }}/issue-5414-${{ matrix.version }}.*/*.log
+            ${{ runner.temp }}/issue-5414-${{ matrix.version }}.*/package*.json
+          if-no-files-found: warn
